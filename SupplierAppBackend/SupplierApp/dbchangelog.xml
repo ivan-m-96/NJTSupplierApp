@@ -1,0 +1,161 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="Ivan (generated)" id="1577530902968-1">
+        <createTable tableName="dobavljac">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="naziv" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="adresa" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-2">
+        <createTable tableName="katalog">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="datum" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dobavljacId" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-3">
+        <createTable tableName="porudzbenica">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="datum" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dobavljacId" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="prenocisteId" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-4">
+        <createTable tableName="prenociste">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="naziv" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="adresa" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-5">
+        <createTable tableName="proizvod">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="cena" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="naziv" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-6">
+        <createTable tableName="stavka_kataloga">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="naziv" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="katalogId" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="proizvodId" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-7">
+        <createTable tableName="stavka_porudzbenice">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="kolicina" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="porudzbenicaId" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="stavkaKatalogaId" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stavkaKatalogaKatalog" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-8">
+        <addUniqueConstraint columnNames="katalogId, proizvodId" constraintName="IDX_467b8437b00c82aa98a6f23e4c" tableName="stavka_kataloga"/>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-9">
+        <createIndex indexName="FK_0570cdd28674299d75589f86049" tableName="stavka_porudzbenice">
+            <column name="porudzbenicaId"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-10">
+        <createIndex indexName="FK_2e3338abad87f511bd6491c5f4e" tableName="stavka_porudzbenice">
+            <column name="stavkaKatalogaId"/>
+            <column name="stavkaKatalogaKatalog"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-11">
+        <createIndex indexName="FK_572078214935f112fb82ece45e0" tableName="porudzbenica">
+            <column name="dobavljacId"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-12">
+        <createIndex indexName="FK_b01493b794d523c74326017adc3" tableName="stavka_kataloga">
+            <column name="proizvodId"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-13">
+        <createIndex indexName="FK_d687c73024e95708f4fc92edb89" tableName="katalog">
+            <column name="dobavljacId"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-14">
+        <createIndex indexName="FK_dda917e2250cf9b234a214eb3eb" tableName="porudzbenica">
+            <column name="prenocisteId"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-15">
+        <addForeignKeyConstraint baseColumnNames="porudzbenicaId" baseTableName="stavka_porudzbenice" constraintName="FK_0570cdd28674299d75589f86049" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="porudzbenica" validate="true"/>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-16">
+        <addForeignKeyConstraint baseColumnNames="katalogId" baseTableName="stavka_kataloga" constraintName="FK_0a2a0c52ab2fe9b31fd2f1032c1" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="katalog" validate="true"/>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-17">
+        <addForeignKeyConstraint baseColumnNames="stavkaKatalogaId,stavkaKatalogaKatalog" baseTableName="stavka_porudzbenice" constraintName="FK_2e3338abad87f511bd6491c5f4e" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id,katalogId" referencedTableName="stavka_kataloga" validate="true"/>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-18">
+        <addForeignKeyConstraint baseColumnNames="dobavljacId" baseTableName="porudzbenica" constraintName="FK_572078214935f112fb82ece45e0" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="dobavljac" validate="true"/>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-19">
+        <addForeignKeyConstraint baseColumnNames="proizvodId" baseTableName="stavka_kataloga" constraintName="FK_b01493b794d523c74326017adc3" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="proizvod" validate="true"/>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-20">
+        <addForeignKeyConstraint baseColumnNames="dobavljacId" baseTableName="katalog" constraintName="FK_d687c73024e95708f4fc92edb89" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="dobavljac" validate="true"/>
+    </changeSet>
+    <changeSet author="Ivan (generated)" id="1577530902968-21">
+        <addForeignKeyConstraint baseColumnNames="prenocisteId" baseTableName="porudzbenica" constraintName="FK_dda917e2250cf9b234a214eb3eb" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="prenociste" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
