@@ -15,8 +15,12 @@ import njt.supplier.SupplierApp.entity.Katalog;
 import njt.supplier.SupplierApp.entity.Porudzbenica;
 import njt.supplier.SupplierApp.entity.Prenociste;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,6 +54,11 @@ public class PrenocisteRESTController {
         return katalogDAO.getAllKatalozi();
     }
     
+    @GetMapping("/katalozi/{id}")
+    public Katalog getKatalogById(@PathVariable(name = "id") int id){
+        return katalogDAO.getKatalogById(id);
+    }
+    
     @GetMapping("/dobavljaci/{idDobavljaca}/katalozi")
     public List<Katalog> getAllKataloziZaDobavljaca(@PathVariable(name = "idDobavljaca") int idDobavljaca) {
         return katalogDAO.getAllKataloziZaDobavljaca(idDobavljaca);
@@ -73,6 +82,26 @@ public class PrenocisteRESTController {
     @GetMapping("/porudzbenice/{idPorudzbenice}")
     public Porudzbenica getPorudzbenicaPrekoID(@PathVariable(name = "idPorudzbenice") int id) {
         return porudzbenicaDAO.getPorudzbenicaPrekoID(id);
+    }
+    
+    @PostMapping("/porudzbenice")
+    public Porudzbenica insertPorudzbenica(@RequestBody Porudzbenica porudzbenica){
+        return porudzbenicaDAO.insertPorudzbenica(porudzbenica);
+    }
+    
+    @PostMapping("/dobavljaci")
+    public Dobavljac insertDobavljac(@RequestBody Dobavljac dobavljac){
+        return dobavljacDAO.insertDobavljac(dobavljac);
+    }
+    
+    @DeleteMapping("/dobavljaci/{id}")
+    public Dobavljac deleteDobavljac(@PathVariable(name = "id") int id){
+        return dobavljacDAO.removeDobavljacByID(id);
+    }
+    
+    @PatchMapping("/dobavljaci/{id}")
+    public Dobavljac patchDobavljac(@PathVariable(name = "id") int id, @RequestBody Dobavljac dobavljac){
+        return dobavljacDAO.patchDobavljac(id, dobavljac);
     }
     
 }

@@ -52,4 +52,11 @@ public class PorudzbenicaDAOImpl implements PorudzbenicaDAO {
         return porudzbenice;
     }
 
+    @Override
+    @Transactional
+    public Porudzbenica insertPorudzbenica(Porudzbenica porudzbenica) {
+        //TODO: Implement
+        return null;
+    }
+
 }

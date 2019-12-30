@@ -7,6 +7,7 @@ package njt.supplier.SupplierApp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.Fetch;
 import org.springframework.stereotype.Repository;
@@ -36,6 +38,8 @@ public class Katalog {
     @ManyToOne()
     @JoinColumn(name = "dobavljacId")
     private Dobavljac dobavljac;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "katalog")
+    private List<StavkaKataloga> stavke;
 
     public Katalog() {
     }
@@ -70,6 +74,15 @@ public class Katalog {
         this.dobavljac = dobavljac;
     }
 
+    public List<StavkaKataloga> getStavke() {
+        return stavke;
+    }
+
+    public void setStavke(List<StavkaKataloga> stavke) {
+        this.stavke = stavke;
+    }
+
+    
     @Override
     public String toString() {
         return "Katalog{" + "id=" + id + ", datum=" + datum + ", dobavljac=" + dobavljac + '}';

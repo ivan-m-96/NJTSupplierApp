@@ -5,6 +5,7 @@
  */
 package njt.supplier.SupplierApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Repository;
  */
 @Entity
 @Table(name = "stavka_kataloga")
+@JsonIgnoreProperties({"katalog"})
 public class StavkaKataloga {
      @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

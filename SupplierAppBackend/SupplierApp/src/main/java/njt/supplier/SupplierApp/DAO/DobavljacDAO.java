@@ -16,4 +16,10 @@ public interface DobavljacDAO {
     public List<Dobavljac> getAllDobavljaci();
 
     public Dobavljac getDobavljacPrekoID(int idDobavljaca);
+
+    public Dobavljac insertDobavljac(Dobavljac dobavljac);
+
+    public Dobavljac removeDobavljacByID(int id);
+
+    public Dobavljac patchDobavljac(int id, Dobavljac dobavljac);
 }

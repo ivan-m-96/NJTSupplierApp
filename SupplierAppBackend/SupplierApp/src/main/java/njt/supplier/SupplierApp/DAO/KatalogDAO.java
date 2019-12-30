@@ -16,4 +16,6 @@ public interface KatalogDAO {
     public List<Katalog> getAllKatalozi();
 
     public List<Katalog> getAllKataloziZaDobavljaca(int idDobavljaca);
+
+    public Katalog getKatalogById(int id);
 }

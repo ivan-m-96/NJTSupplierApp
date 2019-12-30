@@ -50,7 +50,7 @@ public class KatalogDAOImpl implements KatalogDAO {
         Session session = entityManager.unwrap(Session.class);
 
         Query<Katalog> query = session.createQuery("from Katalog K where K.dobavljac.id= :idDobavljaca", Katalog.class).setParameter("idDobavljaca", idDobavljaca);
-        
+
         System.out.println("IdDobavljaca" + idDobavljaca);
 
         System.out.println("Query" + query.getQueryString());
@@ -60,6 +60,26 @@ public class KatalogDAOImpl implements KatalogDAO {
         session.close();
 
         return katalozi;
+    }
+
+    @Override
+    @Transactional
+    public Katalog getKatalogById(int id) {
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<Katalog> query = session.createQuery("from Katalog K where K.id=:idKataloga ", Katalog.class).setParameter("idKataloga", id);
+        System.out.println("id" + id);
+
+        System.out.println("Query" + query.getQueryString());
+        Katalog katalog = query.getSingleResult();
+
+        
+
+        katalog.getStavke();
+
+        session.close();
+
+        return katalog;
     }
 
 }

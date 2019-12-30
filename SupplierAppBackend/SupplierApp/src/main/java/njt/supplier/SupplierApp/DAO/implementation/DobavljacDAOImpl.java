@@ -43,6 +43,7 @@ public class DobavljacDAOImpl implements DobavljacDAO {
     }
 
     @Override
+    @Transactional
     public Dobavljac getDobavljacPrekoID(int idDobavljaca) {
         Session session = entityManager.unwrap(Session.class);
 
@@ -51,6 +52,60 @@ public class DobavljacDAOImpl implements DobavljacDAO {
         Dobavljac dobavljac = query.getSingleResult();
 
         return dobavljac;
+    }
+
+    @Override
+    @Transactional
+    public Dobavljac insertDobavljac(Dobavljac dobavljac) {
+
+        Session session = entityManager.unwrap(Session.class);
+
+        session.save(dobavljac);
+
+        return dobavljac;
+    }
+
+    @Override
+    @Transactional
+    public Dobavljac removeDobavljacByID(int id) {
+        Session session = entityManager.unwrap(Session.class);
+
+        Dobavljac dobavljac = getDobavljacPrekoID(id);
+
+        if (dobavljac != null) {
+            try {
+                session.delete(dobavljac);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        return dobavljac;
+    }
+
+    @Override
+    @Transactional
+    public Dobavljac patchDobavljac(int id, Dobavljac dobavljacNew) {
+        Session session = entityManager.unwrap(Session.class);
+        Dobavljac dobavljac = getDobavljacPrekoID(id);
+
+        if (dobavljac != null) {
+            dobavljac.setNaziv(dobavljacNew.getNaziv());
+            dobavljac.setAdresa(dobavljacNew.getAdresa());
+
+            try {
+                session.update(dobavljac);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        return dobavljac;
+
     }
 
 }

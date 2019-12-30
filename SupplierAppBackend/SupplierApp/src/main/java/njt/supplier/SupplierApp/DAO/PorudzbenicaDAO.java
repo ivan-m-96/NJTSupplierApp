@@ -16,4 +16,6 @@ public interface PorudzbenicaDAO {
     public Porudzbenica getPorudzbenicaPrekoID(int id);
 
     public List<Porudzbenica> getAllPorudzbeniceZaDobavljaca(int idDobavljaca);
+
+    public Porudzbenica insertPorudzbenica(Porudzbenica porudzbenica);
 }
