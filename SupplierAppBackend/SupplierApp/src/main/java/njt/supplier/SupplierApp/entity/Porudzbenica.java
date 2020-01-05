@@ -5,8 +5,10 @@
  */
 package njt.supplier.SupplierApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +25,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "porudzbenica")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Porudzbenica {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -36,14 +40,14 @@ public class Porudzbenica {
     @ManyToOne
     @JoinColumn(name = "prenocisteId")
     private Prenociste prenociste;
-    @OneToMany(mappedBy = "porudzbenica")
-    private List<StavkaPorudzbenice> stavke; 
+    @OneToMany(mappedBy = "porudzbenica", cascade = CascadeType.ALL, orphanRemoval=true)
+    private List<StavkaPorudzbenice> stavke;
 
     public Porudzbenica() {
     }
 
-    public Porudzbenica(int id, Date datum, Dobavljac dobavljac, Prenociste prenociste, List<StavkaPorudzbenice> stavke) {
-        this.id = id;
+    public Porudzbenica(Date datum, Dobavljac dobavljac, Prenociste prenociste, List<StavkaPorudzbenice> stavke) {
+
         this.datum = datum;
         this.dobavljac = dobavljac;
         this.prenociste = prenociste;
@@ -89,7 +93,10 @@ public class Porudzbenica {
     public void setPrenociste(Prenociste prenociste) {
         this.prenociste = prenociste;
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "Porudzbenica{" + "id=" + id + ", datum=" + datum + ", dobavljac=" + dobavljac + ", prenociste=" + prenociste + ", stavke=" + stavke + '}';
+    }
+
 }

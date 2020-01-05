@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -39,16 +40,29 @@ public class StavkaPorudzbenice {
     @ManyToOne
     @JoinColumn (name = "stavkaKatalogaId")
     private StavkaKataloga stavkaKataloga;
-
+    @Transient
+    private boolean zaBrisanje;
+    
     public StavkaPorudzbenice() {
     }
 
-    public StavkaPorudzbenice(int id, int kolicina, Porudzbenica porudzbenica, StavkaKataloga stavkaKataloga) {
-        this.id = id;
+    public StavkaPorudzbenice( int kolicina, Porudzbenica porudzbenica, StavkaKataloga stavkaKataloga, boolean zaBrisanje) {
+        
         this.kolicina = kolicina;
         this.porudzbenica = porudzbenica;
         this.stavkaKataloga = stavkaKataloga;
+        this.zaBrisanje = zaBrisanje;
     }
+
+    public boolean isZaBrisanje() {
+        return zaBrisanje;
+    }
+
+    public void setZaBrisanje(boolean zaBrisanje) {
+        this.zaBrisanje = zaBrisanje;
+    }
+
+    
 
     public int getId() {
         return id;
@@ -82,6 +96,12 @@ public class StavkaPorudzbenice {
         this.stavkaKataloga = stavkaKataloga;
     }
 
+    @Override
+    public String toString() {
+        return "StavkaPorudzbenice{" + "id=" + id + ", kolicina=" + kolicina + ", porudzbenica="  + ", stavkaKataloga=" + stavkaKataloga + ", zaBrisanje=" + zaBrisanje + '}';
+    }
+
+  
     
     
 }

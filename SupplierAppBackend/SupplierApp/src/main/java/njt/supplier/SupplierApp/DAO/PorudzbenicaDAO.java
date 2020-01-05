@@ -18,4 +18,8 @@ public interface PorudzbenicaDAO {
     public List<Porudzbenica> getAllPorudzbeniceZaDobavljaca(int idDobavljaca);
 
     public Porudzbenica insertPorudzbenica(Porudzbenica porudzbenica);
+
+    public Porudzbenica deletePorudzbenicaById(int id);
+
+    public Porudzbenica patchPorudzbenica(int id, Porudzbenica porudzbenica);
 }
