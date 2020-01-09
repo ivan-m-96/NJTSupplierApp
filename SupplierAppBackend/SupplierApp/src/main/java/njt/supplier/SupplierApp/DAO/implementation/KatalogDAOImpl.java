@@ -5,11 +5,13 @@
  */
 package njt.supplier.SupplierApp.DAO.implementation;
 
+import java.io.IOException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import njt.supplier.SupplierApp.DAO.KatalogDAO;
 import njt.supplier.SupplierApp.entity.Katalog;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,53 +35,66 @@ public class KatalogDAOImpl implements KatalogDAO {
     @Transactional
     public List<Katalog> getAllKatalozi() {
 
-        Session session = entityManager.unwrap(Session.class);
+        try {
+            Session session = entityManager.unwrap(Session.class);
 
-        Query<Katalog> query = session.createQuery("from Katalog", Katalog.class);
+            Query<Katalog> query = session.createQuery("from Katalog", Katalog.class);
 
-        List<Katalog> katalozi = query.getResultList();
+            List<Katalog> katalozi = query.getResultList();
 
-        session.close();
+            session.close();
 
-        return katalozi;
+            return katalozi;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     @Transactional
     public List<Katalog> getAllKataloziZaDobavljaca(int idDobavljaca) {
-        Session session = entityManager.unwrap(Session.class);
+        try {
+            Session session = entityManager.unwrap(Session.class);
 
-        Query<Katalog> query = session.createQuery("from Katalog K where K.dobavljac.id= :idDobavljaca", Katalog.class).setParameter("idDobavljaca", idDobavljaca);
+            Query<Katalog> query = session.createQuery("from Katalog K where K.dobavljac.id= :idDobavljaca", Katalog.class).setParameter("idDobavljaca", idDobavljaca);
 
-        System.out.println("IdDobavljaca" + idDobavljaca);
+            System.out.println("IdDobavljaca" + idDobavljaca);
 
-        System.out.println("Query" + query.getQueryString());
+            System.out.println("Query" + query.getQueryString());
 
-        List<Katalog> katalozi = query.getResultList();
+            List<Katalog> katalozi = query.getResultList();
 
-        session.close();
+            session.close();
 
-        return katalozi;
+            return katalozi;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     @Transactional
     public Katalog getKatalogById(int id) {
-        Session session = entityManager.unwrap(Session.class);
+        try {
+            Session session = entityManager.unwrap(Session.class);
 
-        Query<Katalog> query = session.createQuery("from Katalog K where K.id=:idKataloga ", Katalog.class).setParameter("idKataloga", id);
-        System.out.println("id" + id);
+            Query<Katalog> query = session.createQuery("from Katalog K where K.id=:idKataloga ", Katalog.class).setParameter("idKataloga", id);
+            System.out.println("id" + id);
 
-        System.out.println("Query" + query.getQueryString());
-        Katalog katalog = query.getSingleResult();
+            System.out.println("Query" + query.getQueryString());
+            Katalog katalog = query.getSingleResult();
 
-        
+            katalog.getStavke();
 
-        katalog.getStavke();
+            session.close();
 
-        session.close();
-
-        return katalog;
+            return katalog;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

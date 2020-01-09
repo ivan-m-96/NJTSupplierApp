@@ -42,7 +42,8 @@ public class PorudzbenicaDAOImpl implements PorudzbenicaDAO {
             Porudzbenica porudzbenica = query.getSingleResult();
             return porudzbenica;
 
-        } catch (NoResultException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
 
@@ -51,80 +52,87 @@ public class PorudzbenicaDAOImpl implements PorudzbenicaDAO {
     @Override
     @Transactional
     public List<Porudzbenica> getAllPorudzbeniceZaDobavljaca(int idDobavljaca) {
-        Session session = entityManager.unwrap(Session.class);
+        try {
+            Session session = entityManager.unwrap(Session.class);
 
-        Query<Porudzbenica> query = session.createQuery("from Porudzbenica P where P.dobavljac.id=:idDobavljaca", Porudzbenica.class).setParameter("idDobavljaca", idDobavljaca);
+            Query<Porudzbenica> query = session.createQuery("from Porudzbenica P where P.dobavljac.id=:idDobavljaca", Porudzbenica.class).setParameter("idDobavljaca", idDobavljaca);
 
-        List<Porudzbenica> porudzbenice = query.getResultList();
+            List<Porudzbenica> porudzbenice = query.getResultList();
 
-        return porudzbenice;
+            return porudzbenice;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     @Transactional
     public Porudzbenica insertPorudzbenica(Porudzbenica porudzbenica) {
-        Session session = entityManager.unwrap(Session.class);
 
         try {
+            Session session = entityManager.unwrap(Session.class);
             for (StavkaPorudzbenice sp : porudzbenica.getStavke()) {
                 sp.setPorudzbenica(porudzbenica);
 
             }
 
             session.merge(porudzbenica);
-            
+            return porudzbenica;
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-        
-        return porudzbenica;
+
     }
 
     @Override
     @Transactional
     public Porudzbenica deletePorudzbenicaById(int id) {
-        Session session = entityManager.unwrap(Session.class);
-
-        Porudzbenica porudzbenica = getPorudzbenicaPrekoID(id);
-
         try {
+            Session session = entityManager.unwrap(Session.class);
+
+            Porudzbenica porudzbenica = getPorudzbenicaPrekoID(id);
 
             session.delete(porudzbenica);
+            return porudzbenica;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-
-        return porudzbenica;
 
     }
 
     @Override
     @Transactional
     public Porudzbenica patchPorudzbenica(int id, Porudzbenica novaPorudzbenica) {
-        Session session = entityManager.unwrap(Session.class);
+        try {
+            Session session = entityManager.unwrap(Session.class);
 
-        
-        Porudzbenica dbPorudzbenica = session.get(Porudzbenica.class, id);
-        
-        dbPorudzbenica.setDatum(novaPorudzbenica.getDatum());
-        
-        List<StavkaPorudzbenice> stavkeIzNove = novaPorudzbenica.getStavke();
-        List<StavkaPorudzbenice> stavkeZaStaru = new ArrayList<StavkaPorudzbenice>();
-        for (StavkaPorudzbenice stavkaPorudzbenice : stavkeIzNove) {
-            if(!stavkaPorudzbenice.isZaBrisanje()){
-                stavkaPorudzbenice.setPorudzbenica(dbPorudzbenica);
-                stavkeZaStaru.add(stavkaPorudzbenice);
+            Porudzbenica dbPorudzbenica = session.get(Porudzbenica.class, id);
+
+            dbPorudzbenica.setDatum(novaPorudzbenica.getDatum());
+
+            List<StavkaPorudzbenice> stavkeIzNove = novaPorudzbenica.getStavke();
+            List<StavkaPorudzbenice> stavkeZaStaru = new ArrayList<StavkaPorudzbenice>();
+            for (StavkaPorudzbenice stavkaPorudzbenice : stavkeIzNove) {
+                if (!stavkaPorudzbenice.isZaBrisanje()) {
+                    stavkaPorudzbenice.setPorudzbenica(dbPorudzbenica);
+                    stavkeZaStaru.add(stavkaPorudzbenice);
+                }
             }
-        }
-        
-        dbPorudzbenica.getStavke().clear();
-        dbPorudzbenica.getStavke().addAll(stavkeZaStaru);
 
-        session.merge(dbPorudzbenica);
-        
-        return dbPorudzbenica;
+            dbPorudzbenica.getStavke().clear();
+            dbPorudzbenica.getStavke().addAll(stavkeZaStaru);
+
+            session.merge(dbPorudzbenica);
+
+            return dbPorudzbenica;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

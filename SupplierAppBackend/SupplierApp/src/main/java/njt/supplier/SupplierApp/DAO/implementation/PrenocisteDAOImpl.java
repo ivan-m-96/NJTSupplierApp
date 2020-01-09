@@ -36,14 +36,19 @@ public class PrenocisteDAOImpl implements PrenocisteDAO {
     @Transactional
     public List<Prenociste> getAll() {
 
-        Session session = entityManager.unwrap(Session.class);
+        try {
+            Session session = entityManager.unwrap(Session.class);
 
-        Query<Prenociste> query = session.createQuery("from Prenociste", Prenociste.class);
+            Query<Prenociste> query = session.createQuery("from Prenociste", Prenociste.class);
 
-        List<Prenociste> prenocista = query.getResultList();
+            List<Prenociste> prenocista = query.getResultList();
 
-        return prenocista;
+            return prenocista;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
-    
 }

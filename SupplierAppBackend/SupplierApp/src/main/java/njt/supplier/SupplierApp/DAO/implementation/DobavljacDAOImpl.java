@@ -33,78 +33,104 @@ public class DobavljacDAOImpl implements DobavljacDAO {
     @Override
     @Transactional
     public List<Dobavljac> getAllDobavljaci() {
-        Session session = entityManager.unwrap(Session.class);
+        try {
 
-        Query<Dobavljac> query = session.createQuery("from Dobavljac", Dobavljac.class);
+            Session session = entityManager.unwrap(Session.class);
 
-        List<Dobavljac> dobavljaci = query.getResultList();
+            Query<Dobavljac> query = session.createQuery("from Dobavljac", Dobavljac.class);
 
-        return dobavljaci;
+            List<Dobavljac> dobavljaci = query.getResultList();
+
+            return dobavljaci;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     @Transactional
     public Dobavljac getDobavljacPrekoID(int idDobavljaca) {
-        Session session = entityManager.unwrap(Session.class);
+        try {
+            Session session = entityManager.unwrap(Session.class);
 
-        Query<Dobavljac> query = session.createQuery("from Dobavljac D where D.id=:idDobavljaca", Dobavljac.class).setParameter("idDobavljaca", idDobavljaca);
+            Query<Dobavljac> query = session.createQuery("from Dobavljac D where D.id=:idDobavljaca", Dobavljac.class).setParameter("idDobavljaca", idDobavljaca);
 
-        Dobavljac dobavljac = query.getSingleResult();
+            Dobavljac dobavljac = query.getSingleResult();
 
-        return dobavljac;
+            return dobavljac;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     @Transactional
     public Dobavljac insertDobavljac(Dobavljac dobavljac) {
 
-        Session session = entityManager.unwrap(Session.class);
+        try {
+            Session session = entityManager.unwrap(Session.class);
 
-        session.save(dobavljac);
+            session.save(dobavljac);
 
-        return dobavljac;
+            return dobavljac;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     @Transactional
     public Dobavljac removeDobavljacByID(int id) {
-        Session session = entityManager.unwrap(Session.class);
+        try {
+            Session session = entityManager.unwrap(Session.class);
 
-        Dobavljac dobavljac = getDobavljacPrekoID(id);
+            Dobavljac dobavljac = getDobavljacPrekoID(id);
 
-        if (dobavljac != null) {
-            try {
-                session.delete(dobavljac);
+            if (dobavljac != null) {
+                try {
+                    session.delete(dobavljac);
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
             }
-        }
 
-        return dobavljac;
+            return dobavljac;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     @Transactional
     public Dobavljac patchDobavljac(int id, Dobavljac dobavljacNew) {
-        Session session = entityManager.unwrap(Session.class);
-        Dobavljac dobavljac = getDobavljacPrekoID(id);
+        try {
+            Session session = entityManager.unwrap(Session.class);
+            Dobavljac dobavljac = getDobavljacPrekoID(id);
 
-        if (dobavljac != null) {
-            dobavljac.setNaziv(dobavljacNew.getNaziv());
-            dobavljac.setAdresa(dobavljacNew.getAdresa());
+            if (dobavljac != null) {
+                dobavljac.setNaziv(dobavljacNew.getNaziv());
+                dobavljac.setAdresa(dobavljacNew.getAdresa());
 
-            try {
-                session.update(dobavljac);
+                try {
+                    session.update(dobavljac);
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
             }
-        }
 
-        return dobavljac;
+            return dobavljac;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
 
     }
 
