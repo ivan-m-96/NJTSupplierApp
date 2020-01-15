@@ -1,0 +1,689 @@
+{ "databaseChangeLog": [
+  {
+    "changeSet": {
+      "id": "1579096414845-1",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "createTable": {
+            "columns": [
+              {
+                "column": {
+                  "autoIncrement": true,
+                  "constraints": {
+                    "primaryKey": true
+                  },
+                  "name": "id",
+                  "type": "INT"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "nullable": false
+                  },
+                  "name": "naziv",
+                  "type": "VARCHAR(255)"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "nullable": false
+                  },
+                  "name": "adresa",
+                  "type": "VARCHAR(255)"
+                }
+              }]
+            ,
+            "tableName": "dobavljac"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-2",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "createTable": {
+            "columns": [
+              {
+                "column": {
+                  "autoIncrement": true,
+                  "constraints": {
+                    "primaryKey": true
+                  },
+                  "name": "id",
+                  "type": "INT"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "nullable": false
+                  },
+                  "name": "datum",
+                  "type": "datetime"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "nullable": false
+                  },
+                  "name": "dobavljacId",
+                  "type": "INT"
+                }
+              }]
+            ,
+            "tableName": "katalog"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-3",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "createTable": {
+            "columns": [
+              {
+                "column": {
+                  "autoIncrement": true,
+                  "constraints": {
+                    "primaryKey": true
+                  },
+                  "name": "id",
+                  "type": "INT"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "nullable": false
+                  },
+                  "name": "datum",
+                  "type": "datetime"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "primaryKey": true
+                  },
+                  "name": "dobavljacId",
+                  "type": "INT"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "primaryKey": true
+                  },
+                  "name": "prenocisteId",
+                  "type": "INT"
+                }
+              }]
+            ,
+            "tableName": "porudzbenica"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-4",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "createTable": {
+            "columns": [
+              {
+                "column": {
+                  "autoIncrement": true,
+                  "constraints": {
+                    "primaryKey": true
+                  },
+                  "name": "id",
+                  "type": "INT"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "nullable": false
+                  },
+                  "name": "naziv",
+                  "type": "VARCHAR(255)"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "nullable": false
+                  },
+                  "name": "adresa",
+                  "type": "VARCHAR(255)"
+                }
+              }]
+            ,
+            "tableName": "prenociste"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-5",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "createTable": {
+            "columns": [
+              {
+                "column": {
+                  "autoIncrement": true,
+                  "constraints": {
+                    "primaryKey": true
+                  },
+                  "name": "id",
+                  "type": "INT"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "nullable": false
+                  },
+                  "name": "cena",
+                  "type": "INT"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "nullable": false
+                  },
+                  "name": "naziv",
+                  "type": "VARCHAR(255)"
+                }
+              }]
+            ,
+            "tableName": "proizvod"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-6",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "createTable": {
+            "columns": [
+              {
+                "column": {
+                  "autoIncrement": true,
+                  "constraints": {
+                    "primaryKey": true
+                  },
+                  "name": "id",
+                  "type": "INT"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "nullable": false
+                  },
+                  "name": "naziv",
+                  "type": "VARCHAR(255)"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "primaryKey": true
+                  },
+                  "name": "katalogId",
+                  "type": "INT"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "nullable": false
+                  },
+                  "name": "proizvodId",
+                  "type": "INT"
+                }
+              }]
+            ,
+            "tableName": "stavka_kataloga"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-7",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "createTable": {
+            "columns": [
+              {
+                "column": {
+                  "autoIncrement": true,
+                  "constraints": {
+                    "primaryKey": true
+                  },
+                  "name": "id",
+                  "type": "INT"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "nullable": false
+                  },
+                  "name": "kolicina",
+                  "type": "INT"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "primaryKey": true
+                  },
+                  "name": "porudzbenicaId",
+                  "type": "INT"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "nullable": false
+                  },
+                  "name": "stavkaKatalogaId",
+                  "type": "INT"
+                }
+              }]
+            ,
+            "tableName": "stavka_porudzbenice"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-8",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "createTable": {
+            "columns": [
+              {
+                "column": {
+                  "constraints": {
+                    "primaryKey": true
+                  },
+                  "name": "id",
+                  "type": "INT"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "nullable": false
+                  },
+                  "name": "username",
+                  "type": "VARCHAR(20)"
+                }
+              },
+              {
+                "column": {
+                  "constraints": {
+                    "nullable": false
+                  },
+                  "name": "password",
+                  "type": "VARCHAR(256)"
+                }
+              }]
+            ,
+            "tableName": "users"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-9",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "addUniqueConstraint": {
+            "columnNames": "katalogId, proizvodId",
+            "constraintName": "IDX_467b8437b00c82aa98a6f23e4c",
+            "tableName": "stavka_kataloga"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-10",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "createIndex": {
+            "columns": [
+              {
+                "column": {
+                  "name": "porudzbenicaId"
+                }
+              }]
+            ,
+            "indexName": "FK_0570cdd28674299d75589f86049",
+            "tableName": "stavka_porudzbenice"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-11",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "createIndex": {
+            "columns": [
+              {
+                "column": {
+                  "name": "dobavljacId"
+                }
+              }]
+            ,
+            "indexName": "FK_572078214935f112fb82ece45e0",
+            "tableName": "porudzbenica"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-12",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "createIndex": {
+            "columns": [
+              {
+                "column": {
+                  "name": "proizvodId"
+                }
+              }]
+            ,
+            "indexName": "FK_b01493b794d523c74326017adc3",
+            "tableName": "stavka_kataloga"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-13",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "createIndex": {
+            "columns": [
+              {
+                "column": {
+                  "name": "dobavljacId"
+                }
+              }]
+            ,
+            "indexName": "FK_d687c73024e95708f4fc92edb89",
+            "tableName": "katalog"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-14",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "createIndex": {
+            "columns": [
+              {
+                "column": {
+                  "name": "prenocisteId"
+                }
+              }]
+            ,
+            "indexName": "FK_dda917e2250cf9b234a214eb3eb",
+            "tableName": "porudzbenica"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-15",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "createIndex": {
+            "columns": [
+              {
+                "column": {
+                  "name": "stavkaKatalogaId"
+                }
+              }]
+            ,
+            "indexName": "stavkaKatalogaId",
+            "tableName": "stavka_porudzbenice"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-16",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "addForeignKeyConstraint": {
+            "baseColumnNames": "porudzbenicaId",
+            "baseTableName": "stavka_porudzbenice",
+            "constraintName": "FK_0570cdd28674299d75589f86049",
+            "deferrable": false,
+            "initiallyDeferred": false,
+            "onDelete": "CASCADE",
+            "onUpdate": "RESTRICT",
+            "referencedColumnNames": "id",
+            "referencedTableName": "porudzbenica",
+            "validate": true
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-17",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "addForeignKeyConstraint": {
+            "baseColumnNames": "katalogId",
+            "baseTableName": "stavka_kataloga",
+            "constraintName": "FK_0a2a0c52ab2fe9b31fd2f1032c1",
+            "deferrable": false,
+            "initiallyDeferred": false,
+            "onDelete": "RESTRICT",
+            "onUpdate": "RESTRICT",
+            "referencedColumnNames": "id",
+            "referencedTableName": "katalog",
+            "validate": true
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-18",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "addForeignKeyConstraint": {
+            "baseColumnNames": "dobavljacId",
+            "baseTableName": "porudzbenica",
+            "constraintName": "FK_572078214935f112fb82ece45e0",
+            "deferrable": false,
+            "initiallyDeferred": false,
+            "onDelete": "RESTRICT",
+            "onUpdate": "RESTRICT",
+            "referencedColumnNames": "id",
+            "referencedTableName": "dobavljac",
+            "validate": true
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-19",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "addForeignKeyConstraint": {
+            "baseColumnNames": "proizvodId",
+            "baseTableName": "stavka_kataloga",
+            "constraintName": "FK_b01493b794d523c74326017adc3",
+            "deferrable": false,
+            "initiallyDeferred": false,
+            "onDelete": "RESTRICT",
+            "onUpdate": "RESTRICT",
+            "referencedColumnNames": "id",
+            "referencedTableName": "proizvod",
+            "validate": true
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-20",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "addForeignKeyConstraint": {
+            "baseColumnNames": "dobavljacId",
+            "baseTableName": "katalog",
+            "constraintName": "FK_d687c73024e95708f4fc92edb89",
+            "deferrable": false,
+            "initiallyDeferred": false,
+            "onDelete": "RESTRICT",
+            "onUpdate": "RESTRICT",
+            "referencedColumnNames": "id",
+            "referencedTableName": "dobavljac",
+            "validate": true
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-21",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "addForeignKeyConstraint": {
+            "baseColumnNames": "prenocisteId",
+            "baseTableName": "porudzbenica",
+            "constraintName": "FK_dda917e2250cf9b234a214eb3eb",
+            "deferrable": false,
+            "initiallyDeferred": false,
+            "onDelete": "RESTRICT",
+            "onUpdate": "RESTRICT",
+            "referencedColumnNames": "id",
+            "referencedTableName": "prenociste",
+            "validate": true
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "1579096414845-22",
+      "author": "Ivan (generated)",
+      "changes": [
+        {
+          "addForeignKeyConstraint": {
+            "baseColumnNames": "stavkaKatalogaId",
+            "baseTableName": "stavka_porudzbenice",
+            "constraintName": "stavka_porudzbenice_ibfk_1",
+            "deferrable": false,
+            "initiallyDeferred": false,
+            "onDelete": "RESTRICT",
+            "onUpdate": "RESTRICT",
+            "referencedColumnNames": "id",
+            "referencedTableName": "stavka_kataloga",
+            "validate": true
+          }
+        }]
+      
+    }
+  }
+  
+]}

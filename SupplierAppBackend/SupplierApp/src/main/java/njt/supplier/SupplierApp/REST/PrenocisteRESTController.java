@@ -43,6 +43,8 @@ public class PrenocisteRESTController {
         this.dobavljacDAO = dobavljacDAO;
         this.porudzbenicaDAO = porudzbenicaDAO;
     }
+    
+    
 
     @GetMapping("/prenociste")
     public List<Prenociste> getAllPrenociste() {
