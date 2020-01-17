@@ -28,6 +28,11 @@ CREATE TABLE `databasechangeloglock` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+/*Data for the table `databasechangeloglock` */
+
+insert  into `databasechangeloglock`(`ID`,`LOCKED`,`LOCKGRANTED`,`LOCKEDBY`) values 
+(1,'\0',NULL,NULL);
+
 /*Table structure for table `dobavljac` */
 
 DROP TABLE IF EXISTS `dobavljac`;
@@ -37,7 +42,13 @@ CREATE TABLE `dobavljac` (
   `naziv` varchar(255) NOT NULL,
   `adresa` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+/*Data for the table `dobavljac` */
+
+insert  into `dobavljac`(`id`,`naziv`,`adresa`) values 
+(1,'Swisslion','Takovo'),
+(4,'Imlek','Imlekova ulica');
 
 /*Table structure for table `katalog` */
 
@@ -51,6 +62,12 @@ CREATE TABLE `katalog` (
   KEY `FK_d687c73024e95708f4fc92edb89` (`dobavljacId`),
   CONSTRAINT `FK_d687c73024e95708f4fc92edb89` FOREIGN KEY (`dobavljacId`) REFERENCES `dobavljac` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+/*Data for the table `katalog` */
+
+insert  into `katalog`(`id`,`datum`,`dobavljacId`) values 
+(1,'2019-08-29 18:58:32',1),
+(2,'2019-08-30 20:50:08',1);
 
 /*Table structure for table `porudzbenica` */
 
@@ -66,7 +83,9 @@ CREATE TABLE `porudzbenica` (
   KEY `FK_dda917e2250cf9b234a214eb3eb` (`prenocisteId`),
   CONSTRAINT `FK_572078214935f112fb82ece45e0` FOREIGN KEY (`dobavljacId`) REFERENCES `dobavljac` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_dda917e2250cf9b234a214eb3eb` FOREIGN KEY (`prenocisteId`) REFERENCES `prenociste` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+
+/*Data for the table `porudzbenica` */
 
 /*Table structure for table `prenociste` */
 
@@ -79,6 +98,11 @@ CREATE TABLE `prenociste` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
+/*Data for the table `prenociste` */
+
+insert  into `prenociste`(`id`,`naziv`,`adresa`) values 
+(1,'Prenociste','Prenociste 123');
+
 /*Table structure for table `proizvod` */
 
 DROP TABLE IF EXISTS `proizvod`;
@@ -89,6 +113,13 @@ CREATE TABLE `proizvod` (
   `naziv` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+/*Data for the table `proizvod` */
+
+insert  into `proizvod`(`id`,`cena`,`naziv`) values 
+(1,123,'Coko smoki'),
+(2,132,'Plazma keks'),
+(3,270,'Vitador Peanut butter');
 
 /*Table structure for table `stavka_kataloga` */
 
@@ -106,6 +137,13 @@ CREATE TABLE `stavka_kataloga` (
   CONSTRAINT `FK_b01493b794d523c74326017adc3` FOREIGN KEY (`proizvodId`) REFERENCES `proizvod` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
+/*Data for the table `stavka_kataloga` */
+
+insert  into `stavka_kataloga`(`id`,`naziv`,`katalogId`,`proizvodId`) values 
+(2,'Coko smoki',1,1),
+(3,'Plazma',1,2),
+(4,'Vitador Peanut butter',2,3);
+
 /*Table structure for table `stavka_porudzbenice` */
 
 DROP TABLE IF EXISTS `stavka_porudzbenice`;
@@ -120,7 +158,26 @@ CREATE TABLE `stavka_porudzbenice` (
   KEY `stavkaKatalogaId` (`stavkaKatalogaId`),
   CONSTRAINT `FK_0570cdd28674299d75589f86049` FOREIGN KEY (`porudzbenicaId`) REFERENCES `porudzbenica` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `stavka_porudzbenice_ibfk_1` FOREIGN KEY (`stavkaKatalogaId`) REFERENCES `stavka_kataloga` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+/*Data for the table `stavka_porudzbenice` */
+
+/*Table structure for table `users` */
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) NOT NULL,
+  `password` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+/*Data for the table `users` */
+
+insert  into `users`(`id`,`username`,`password`) values 
+(1,'admin','$2a$10$ummMiwQhCj81BEdeKdReKeZIkEh5fcZSxU/zcoB.vkEQcQ2tXvdAO'),
+(2,'user','$2a$10$6MqYGjZICGE8CkFlFMzrXuN5UML9VEWEc3idYEQRLZJ1cYwY9B4ve');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
