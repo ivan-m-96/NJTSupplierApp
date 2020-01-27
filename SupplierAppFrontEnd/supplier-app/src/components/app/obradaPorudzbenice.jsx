@@ -91,8 +91,23 @@ export default class obradaPorudzbenice extends Component {
     });
   }
 
+  componentWillMount() {
+    if (this.props.location.state) {
+      if (this.props.location.state && this.props.location.state.porudzbenica) {
+        this.setState({
+          selectedPorudzbenica: this.props.location.state.porudzbenica,
+          selectedDobavljacZaPorudzbenice: this.props.location.state
+            .porudzbenica.dobavljac
+        });
+      }
+    }
+  }
+
   componentDidMount() {
     this.getDobavljaci();
+    if (this.state.selectedPorudzbenica) {
+      this.ucitajPorudzbenicu();
+    }
   }
   async getDobavljaci() {
     try {
@@ -284,6 +299,7 @@ export default class obradaPorudzbenice extends Component {
   }
   async ucitajPorudzbenicu() {
     let porudzbenica = null;
+
     if (
       this.state.selectedPorudzbenica &&
       this.state.selectedPorudzbenica.dobavljac.id ===
@@ -581,6 +597,7 @@ export default class obradaPorudzbenice extends Component {
             proizvodi={this.state.stavke}
             handleStavkaChange={this.handleStavkaChange}
             handleBrisanjeStavke={this.handleBrisanjeStavke}
+            obrada={true}
           ></Tabela>
           <div>{this.state.insertMessage}</div>
           <div>

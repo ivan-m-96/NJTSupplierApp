@@ -83,6 +83,7 @@ public class PrenocisteRESTController {
 
     @GetMapping("/porudzbenice/{idPorudzbenice}")
     public Porudzbenica getPorudzbenicaPrekoID(@PathVariable(name = "idPorudzbenice") int id) {
+        System.out.println("Id porudzbenice " + id);
         return porudzbenicaDAO.getPorudzbenicaPrekoID(id);
     }
 

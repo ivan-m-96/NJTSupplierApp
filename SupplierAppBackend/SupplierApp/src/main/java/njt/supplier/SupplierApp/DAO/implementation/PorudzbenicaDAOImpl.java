@@ -76,7 +76,7 @@ public class PorudzbenicaDAOImpl implements PorudzbenicaDAO {
                 sp.setPorudzbenica(porudzbenica);
 
             }
-
+            System.out.println(porudzbenica);
             session.merge(porudzbenica);
             return porudzbenica;
 

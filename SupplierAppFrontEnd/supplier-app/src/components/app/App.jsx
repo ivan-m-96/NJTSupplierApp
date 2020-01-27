@@ -4,24 +4,33 @@ import { ReactDOM, render } from "react-dom";
 import "./App.css";
 import "react-widgets/dist/css/react-widgets.css";
 // eslint-disable-next-line
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect
+} from "react-router-dom";
 import {
   removeDobavljac,
   updateDobavljac,
   getPorudzbeniceZaDobavljaca,
-  postDobavljac
+  postDobavljac,
+  login,
+  updateHeader
 } from "./service/api";
 import Header from "./header";
 import Forma from "./form";
 import Tabela from "./tableDobavljaci";
+import Login from "./Login";
 import ObradaPorudzbenice from "./obradaPorudzbenice";
-
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedRow: null,
-
+      authed: false,
       naziv: "",
       adresa: "",
       selectedDobavljac: 0,
@@ -37,6 +46,8 @@ class App extends React.Component {
     this.getRedniBrojPorudzbenice = this.getRedniBrojPorudzbenice.bind(this);
     this.setSelectedPorudzbenica = this.setSelectedPorudzbenica.bind(this);
     this.refresh = this.refresh.bind(this);
+    this.appLogin = this.appLogin.bind(this);
+    this.logout = this.logout.bind(this);
   }
   async onRemove() {
     try {
@@ -126,9 +137,35 @@ class App extends React.Component {
     }
   }
   setSelectedRow = id => this.setState({ selectedRow: id });
-
   refresh() {
     this.setState({ ...this.state });
+  }
+
+  async appLogin(username, pass) {
+    let res = null;
+
+    await login(username, pass).then(response => (res = response));
+    console.log("from app login");
+    console.log(res);
+    if (res) {
+      cookies.set("Authorization", res.headers.authorization, { path: "/" });
+      this.setState({ authed: true });
+      updateHeader();
+    }
+  }
+
+  componentWillMount() {
+    if (cookies.get("Authorization")) {
+      console.log(cookies.get("Authorization"));
+      this.setState({ authed: true });
+    } else {
+      this.setState({ authed: false });
+    }
+  }
+
+  logout() {
+    cookies.remove("Authorization");
+    this.setState({ authed: false });
   }
 
   render() {
@@ -141,43 +178,50 @@ class App extends React.Component {
           crossOrigin="anonymous"
         />
         <div className="App">
-          <Header />
+          <Header logout={this.logout} />
 
           <div>
             <hr />
             <div>
               {/* <Route path="/form" render={props => <Forma {...props} />} /> */}
               <Route
-                path="/dobavljaci"
+                path="/login"
                 render={props => (
-                  <Tabela
+                  <Login
                     {...props}
-                    selectedRow={this.state.selectedRow}
-                    setSelectedRow={this.setSelectedRow}
-                    onRemove={this.onRemove}
-                    onUpdate={this.onUpdate}
-                    onInsert={this.onInsert}
-                    lastSelectedRow={this.state.lastSelectedRow}
-                    setSelectedValues={this.setSelectedValues}
-                    naziv={this.state.naziv}
-                    adresa={this.state.adresa}
-                    handleTextChange={this.handleTextChange}
-                    refresh={this.refresh}
-                  />
-                )}
-              />
-              <Route
-                path="/porudzbenica"
-                render={props => (
-                  <ObradaPorudzbenice
-                    {...props}
-                    getRedniBrojPorudzbenice={this.getRedniBrojPorudzbenice}
-                    setSelectedDobavljac={this.setSelectedDobavljac}
-                    redniBrojPorudzbenice={this.state.redniBrojPorudzbenice}
-                    setSelectedPorudzbenica={this.setSelectedPorudzbenica}
+                    authed={this.state.authed}
+                    login={this.appLogin}
                   />
                 )}
               ></Route>
+
+              <PrivateRoute
+                path="/dobavljaci"
+                component={Tabela}
+                {...this.props}
+                selectedRow={this.state.selectedRow}
+                setSelectedRow={this.setSelectedRow}
+                onRemove={this.onRemove}
+                onUpdate={this.onUpdate}
+                onInsert={this.onInsert}
+                lastSelectedRow={this.state.lastSelectedRow}
+                setSelectedValues={this.setSelectedValues}
+                naziv={this.state.naziv}
+                adresa={this.state.adresa}
+                handleTextChange={this.handleTextChange}
+                refresh={this.refresh}
+                authed={this.state.authed}
+              />
+              <PrivateRoute
+                path="/porudzbenica"
+                component={ObradaPorudzbenice}
+                {...this.props}
+                getRedniBrojPorudzbenice={this.getRedniBrojPorudzbenice}
+                setSelectedDobavljac={this.setSelectedDobavljac}
+                redniBrojPorudzbenice={this.state.redniBrojPorudzbenice}
+                setSelectedPorudzbenica={this.setSelectedPorudzbenica}
+                authed={this.state.authed}
+              ></PrivateRoute>
             </div>
           </div>
         </div>
@@ -185,5 +229,20 @@ class App extends React.Component {
     );
   }
 }
-
+function PrivateRoute({ component: Component, authed, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        authed === true ? (
+          <Component {...props} {...rest} />
+        ) : (
+          <Redirect
+            to={{ pathname: "/login", state: { from: props.location } }}
+          />
+        )
+      }
+    />
+  );
+}
 export default App;

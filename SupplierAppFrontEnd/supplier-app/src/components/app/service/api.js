@@ -1,8 +1,13 @@
 import { func } from "prop-types";
-
+import Cookies from "universal-cookie";
 const axios = require("axios");
-axios.defaults.headers.common["Authorization"] =
-  "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTgwMDQ2NzI2fQ.iVhbw-j8Kg0R3FKCsyvb3vey57rHbqoDnziTDRFHaDDfuGTpaE_jeMNIMrmxx5LZrtd0xJl9XYnFmG3IiROLLA";
+
+const cookies = new Cookies();
+axios.defaults.headers.common["Authorization"] = cookies.get("Authorization");
+
+export function updateHeader() {
+  axios.defaults.headers.common["Authorization"] = cookies.get("Authorization");
+}
 
 export async function postDobavljac(dobavljac) {
   await axios({
@@ -166,6 +171,29 @@ export async function postPorudzbenica(porudzbenica) {
       responsee = { ...responsee, message: "Uspešno uneta porudžbenica!" };
     }
   });
+  return responsee;
+}
+export async function login(username, password) {
+  let responsee = null;
+  await axios({
+    method: "post",
+    url: "http://localhost:3001/login",
+    headers: { "Content-Type": "application/json" },
+    data: {
+      username: username,
+      password: password
+    }
+  })
+    .then(function(response) {
+      console.log("From Login");
+      console.log(response.headers);
+      responsee = response;
+      if (response.status === 200) {
+        responsee = { ...responsee, message: "Logged in!" };
+      }
+    })
+    .catch(resp => console.log(resp.response));
+  console.log(responsee);
   return responsee;
 }
 

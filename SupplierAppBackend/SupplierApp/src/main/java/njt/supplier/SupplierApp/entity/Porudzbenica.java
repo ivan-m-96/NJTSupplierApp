@@ -46,6 +46,8 @@ public class Porudzbenica {
     public Porudzbenica() {
     }
 
+
+
     public Porudzbenica(Date datum, Dobavljac dobavljac, Prenociste prenociste, List<StavkaPorudzbenice> stavke) {
 
         this.datum = datum;
