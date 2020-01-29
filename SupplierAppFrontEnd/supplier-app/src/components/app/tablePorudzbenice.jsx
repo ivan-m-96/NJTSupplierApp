@@ -31,7 +31,7 @@ export default class tablePorudzbenice extends Component {
                 <tr>
                   <th>#</th>
                   <th>Datum</th>
-                  <th>Izmeni?</th>
+                  <th>Izmeni</th>
                 </tr>
               </thead>
               <tbody>

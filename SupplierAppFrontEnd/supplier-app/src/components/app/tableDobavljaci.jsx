@@ -74,6 +74,10 @@ export class tableDobavljaci extends Component {
     else this.setState({ selectedDobavljac: dobavljac });
   }
 
+  componentWillMount(){
+    this.props.setSelectedRow(null);
+  }
+
   async componentDidMount() {
     await this.getDobavljaci();
   }
