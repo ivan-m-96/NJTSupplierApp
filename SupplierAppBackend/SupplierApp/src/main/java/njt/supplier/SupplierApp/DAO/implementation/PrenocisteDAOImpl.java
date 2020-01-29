@@ -33,7 +33,6 @@ public class PrenocisteDAOImpl implements PrenocisteDAO {
     }
 
     @Override
-    @Transactional
     public List<Prenociste> getAll() {
 
         try {

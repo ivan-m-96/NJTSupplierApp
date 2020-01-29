@@ -31,7 +31,6 @@ public class DobavljacDAOImpl implements DobavljacDAO {
     }
 
     @Override
-    @Transactional
     public List<Dobavljac> getAllDobavljaci() {
         try {
 
@@ -49,7 +48,6 @@ public class DobavljacDAOImpl implements DobavljacDAO {
     }
 
     @Override
-    @Transactional
     public Dobavljac getDobavljacPrekoID(int idDobavljaca) {
         try {
             Session session = entityManager.unwrap(Session.class);
@@ -66,7 +64,6 @@ public class DobavljacDAOImpl implements DobavljacDAO {
     }
 
     @Override
-    @Transactional
     public Dobavljac insertDobavljac(Dobavljac dobavljac) {
 
         try {
@@ -82,7 +79,6 @@ public class DobavljacDAOImpl implements DobavljacDAO {
     }
 
     @Override
-    @Transactional
     public Dobavljac removeDobavljacByID(int id) {
         try {
             Session session = entityManager.unwrap(Session.class);
@@ -107,7 +103,6 @@ public class DobavljacDAOImpl implements DobavljacDAO {
     }
 
     @Override
-    @Transactional
     public Dobavljac patchDobavljac(int id, Dobavljac dobavljacNew) {
         try {
             Session session = entityManager.unwrap(Session.class);

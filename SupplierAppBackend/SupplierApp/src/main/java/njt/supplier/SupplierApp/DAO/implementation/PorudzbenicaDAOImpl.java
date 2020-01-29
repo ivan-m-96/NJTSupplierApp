@@ -8,11 +8,9 @@ package njt.supplier.SupplierApp.DAO.implementation;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import njt.supplier.SupplierApp.DAO.PorudzbenicaDAO;
 import njt.supplier.SupplierApp.entity.Porudzbenica;
-import njt.supplier.SupplierApp.entity.Prenociste;
 import njt.supplier.SupplierApp.entity.StavkaPorudzbenice;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -32,7 +30,6 @@ public class PorudzbenicaDAOImpl implements PorudzbenicaDAO {
     }
 
     @Override
-    @Transactional
     public Porudzbenica getPorudzbenicaPrekoID(int id) {
         Session session = entityManager.unwrap(Session.class);
 
@@ -50,7 +47,6 @@ public class PorudzbenicaDAOImpl implements PorudzbenicaDAO {
     }
 
     @Override
-    @Transactional
     public List<Porudzbenica> getAllPorudzbeniceZaDobavljaca(int idDobavljaca) {
         try {
             Session session = entityManager.unwrap(Session.class);
@@ -67,7 +63,6 @@ public class PorudzbenicaDAOImpl implements PorudzbenicaDAO {
     }
 
     @Override
-    @Transactional
     public Porudzbenica insertPorudzbenica(Porudzbenica porudzbenica) {
 
         try {
@@ -88,7 +83,6 @@ public class PorudzbenicaDAOImpl implements PorudzbenicaDAO {
     }
 
     @Override
-    @Transactional
     public Porudzbenica deletePorudzbenicaById(int id) {
         try {
             Session session = entityManager.unwrap(Session.class);
@@ -105,7 +99,6 @@ public class PorudzbenicaDAOImpl implements PorudzbenicaDAO {
     }
 
     @Override
-    @Transactional
     public Porudzbenica patchPorudzbenica(int id, Porudzbenica novaPorudzbenica) {
         try {
             Session session = entityManager.unwrap(Session.class);

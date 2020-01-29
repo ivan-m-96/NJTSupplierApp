@@ -32,7 +32,6 @@ public class KatalogDAOImpl implements KatalogDAO {
     }
 
     @Override
-    @Transactional
     public List<Katalog> getAllKatalozi() {
 
         try {
@@ -52,7 +51,6 @@ public class KatalogDAOImpl implements KatalogDAO {
     }
 
     @Override
-    @Transactional
     public List<Katalog> getAllKataloziZaDobavljaca(int idDobavljaca) {
         try {
             Session session = entityManager.unwrap(Session.class);
@@ -75,7 +73,6 @@ public class KatalogDAOImpl implements KatalogDAO {
     }
 
     @Override
-    @Transactional
     public Katalog getKatalogById(int id) {
         try {
             Session session = entityManager.unwrap(Session.class);
