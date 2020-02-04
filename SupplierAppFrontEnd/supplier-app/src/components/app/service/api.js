@@ -167,8 +167,10 @@ export async function postPorudzbenica(porudzbenica) {
   }).then(function(response) {
     console.log(response);
     responsee = response;
-    if (response.status === 200) {
+    if (response.status === 200 && response.data) {
       responsee = { ...responsee, message: "Uspešno uneta porudžbenica!" };
+    } else {
+      responsee = { ...responsee, message: "Neuspešno uneta porudžbenica!" };
     }
   });
   return responsee;

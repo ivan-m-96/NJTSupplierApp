@@ -37,16 +37,21 @@ export default class obradaPorudzbenice extends Component {
       datum: new Date(),
       izmenaPorudzbenice: false,
       selectedDobavljac: "",
+      selectedDobavljacPrikaz: "",
       selectedKatalog: "",
+      selectedKatalogPrikaz: "",
       selectedProizvod: "",
+      selectedProizvodPrikaz: "",
       selectedDobavljacZaPorudzbenice: "",
       selectedPorudzbenica: "",
+      selectedPorudzbenicaPrikaz: "",
       insertMessage: "",
       errors: {}
     };
 
-    const startState = {
+    let startState = {
       kolicina: 0,
+      dobavljaci: [],
       katalozi: [],
       proizvodi: [],
       stavke: [],
@@ -59,6 +64,7 @@ export default class obradaPorudzbenice extends Component {
       selectedProizvod: "",
       selectedDobavljacZaPorudzbenice: "",
       selectedPorudzbenica: "",
+      selectedPorudzbenicaPrikaz: "",
       insertMessage: "",
       errors: {}
     };
@@ -289,9 +295,15 @@ export default class obradaPorudzbenice extends Component {
     }
   }
 
-  proveriPostojanjePorudzbenice(id) {
-    let porudzbenica = getPorudzbenica(id);
-    if (porudzbenica) this.setState({ izmenaPorudzbenice: true });
+  async proveriPostojanjePorudzbenice(id) {
+    let porudzbenica = await getPorudzbenica(id);
+    if (porudzbenica.data) {
+      console.log(porudzbenica);
+      console.log(
+        "Menjam izmenaPorudzbenice u true iz proveriPostojanjePorudzbenice"
+      );
+      this.setState({ izmenaPorudzbenice: true });
+    } else this.setState({ izmenaPorudzbenice: false });
     console.log(
       "OVA PORUDZBENICA JE ZA IZMENU: " + this.state.izmenaPorudzbenice
     );
@@ -433,6 +445,9 @@ export default class obradaPorudzbenice extends Component {
                       e,
                       "selectedDobavljacZaPorudzbenice"
                     );
+                    await this.handleSelect("", "selectedPorudzbenica");
+
+                    await this.handleSelect("", "selectedPorudzbenicaPrikaz");
                     await this.getPorudzbenice();
                   }}
                 ></Combobox>
@@ -445,6 +460,10 @@ export default class obradaPorudzbenice extends Component {
                     <Combobox
                       id="porudzbenice"
                       data={this.state.porudzbenice}
+                      value={this.state.selectedPorudzbenicaPrikaz}
+                      onChange={value =>
+                        this.setState({ selectedPorudzbenicaPrikaz: value })
+                      }
                       textField={item => {
                         if (this.state.selectedDobavljacZaPorudzbenice) {
                           return typeof item === "string"
@@ -458,6 +477,7 @@ export default class obradaPorudzbenice extends Component {
                       filter="contains"
                       onSelect={async e => {
                         this.handleSelect(e, "selectedPorudzbenica");
+                        this.handleSelect(e, "selectedPorudzbenicaPrikaz");
                       }}
                     ></Combobox>
 
@@ -483,12 +503,29 @@ export default class obradaPorudzbenice extends Component {
                     <Combobox
                       id="dobavljaci"
                       data={this.state.dobavljaci}
-                      disabled={this.state.izmenaPorudzbenice}
+                      disabled={
+                        this.state.izmenaPorudzbenice ||
+                        this.state.stavke.length > 0
+                      }
                       textField="naziv"
                       filter="contains"
+                      value={this.state.selectedDobavljacPrikaz}
+                      onChange={value => {
+                        this.setState({ selectedDobavljacPrikaz: value });
+                        if (!this.selectedDobavljac) {
+                          this.handleSelect("", "selectedKatalog");
+                          this.handleSelect("", "selectedKatalogPrikaz");
+                          this.handleSelect("", "selectedProizvod");
+                          this.handleSelect("", "selectedProizvodPrikaz");
+                        }
+                      }}
                       onSelect={async e => {
                         await this.handleSelect(e, "selectedDobavljac");
+                        await this.handleSelect(e, "selectedDobavljacPrikaz");
+                        this.handleSelect("", "selectedKatalogPrikaz");
                         this.handleSelect("", "selectedKatalog");
+                        this.handleSelect("", "selectedProizvod");
+                        this.handleSelect("", "selectedProizvodPrikaz");
                         await this.getKatalozi();
                         await this.props.setSelectedDobavljac(
                           this.state.selectedDobavljac
@@ -508,10 +545,21 @@ export default class obradaPorudzbenice extends Component {
                       data={this.state.katalozi}
                       textField="naziv"
                       filter="contains"
+                      minLength="1"
                       disabled={!this.state.selectedDobavljac}
+                      value={this.state.selectedKatalogPrikaz}
+                      onChange={value => {
+                        this.setState({ selectedKatalogPrikaz: value });
+                        if (!this.state.selectedKatalog) {
+                          this.handleSelect("", "selectedProizvod");
+                          this.handleSelect("", "selectedProizvodPrikaz");
+                        }
+                      }}
                       onSelect={async e => {
                         await this.handleSelect(e, "selectedKatalog");
+                        await this.handleSelect(e, "selectedKatalogPrikaz");
                         this.handleSelect("", "selectedProizvod");
+                        this.handleSelect("", "selectedProizvodPrikaz");
 
                         await this.getProizvodi();
                       }}
@@ -528,8 +576,20 @@ export default class obradaPorudzbenice extends Component {
                       id="proizvodi"
                       data={this.state.proizvodi}
                       textField="naziv"
+                      value={this.state.selectedProizvodPrikaz}
+                      onChange={e => {
+                        this.setState({
+                          selectedProizvodPrikaz: e
+                        });
+                        if (!this.state.selectedProizvod)
+                          this.handleSelect(0, "kolicina");
+                      }}
                       disabled={!this.state.selectedKatalog}
-                      onSelect={e => this.handleSelect(e, "selectedProizvod")}
+                      onSelect={e => {
+                        this.handleSelect(e, "selectedProizvodPrikaz");
+                        this.handleSelect(e, "selectedProizvod");
+                      }}
+                      filter="contains"
                     ></Combobox>
                     <div className="error">
                       {this.state.errors["proizvodi"]}
