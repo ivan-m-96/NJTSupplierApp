@@ -5,9 +5,12 @@
  */
 package njt.supplier.SupplierApp.DAO.implementation;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
+
 import njt.supplier.SupplierApp.DAO.DobavljacDAO;
 import njt.supplier.SupplierApp.entity.Dobavljac;
 import njt.supplier.SupplierApp.entity.Prenociste;
@@ -17,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
- *
  * @author Ivan
  */
 @Repository
@@ -57,6 +59,10 @@ public class DobavljacDAOImpl implements DobavljacDAO {
             Dobavljac dobavljac = query.getSingleResult();
 
             return dobavljac;
+        } catch (NoResultException e) {
+            System.out.println("No result for Dobavljac with id " + idDobavljaca);
+            e.printStackTrace();
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -68,9 +74,19 @@ public class DobavljacDAOImpl implements DobavljacDAO {
 
         try {
             Session session = entityManager.unwrap(Session.class);
+            if (dobavljac != null) {
+                if(dobavljac.getNaziv()==null || dobavljac.getNaziv().isEmpty()){
+                    System.out.println("Dobavljac field naziv must not be null or empty.");
+                    return null;
 
-            session.save(dobavljac);
+                }
+                if(dobavljac.getAdresa()==null || dobavljac.getAdresa().isEmpty()){
+                    System.out.println("Dobavljac field adresa must not be null or empty.");
+                    return null;
 
+                }
+                session.save(dobavljac);
+            }
             return dobavljac;
         } catch (Exception e) {
             e.printStackTrace();

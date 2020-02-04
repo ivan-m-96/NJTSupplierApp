@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 /**
  *
  * @author Ivan
@@ -89,7 +91,7 @@ public class PrenocisteRESTController {
     }
 
     @PostMapping("/porudzbenice")
-    public Porudzbenica insertPorudzbenica(@RequestBody Porudzbenica porudzbenica) {
+    public Porudzbenica insertPorudzbenica(@Valid @RequestBody Porudzbenica porudzbenica) {
         System.out.println("PORUDZBENICA:");
         System.out.println(porudzbenica);
         return porudzbenicaService.insertPorudzbenica(porudzbenica);
@@ -103,13 +105,13 @@ public class PrenocisteRESTController {
     }
     
     @PatchMapping("/porudzbenice/{id}")
-    public Porudzbenica patchPorudzbenica(@PathVariable(name = "id") int id, @RequestBody Porudzbenica porudzbenica){
+    public Porudzbenica patchPorudzbenica(@PathVariable(name = "id") int id,@Valid @RequestBody Porudzbenica porudzbenica){
         return porudzbenicaService.patchPorudzbenica(id, porudzbenica);
                 
     }
     
     @PostMapping("/dobavljaci")
-    public Dobavljac insertDobavljac(@RequestBody Dobavljac dobavljac) {
+    public Dobavljac insertDobavljac(@Valid @RequestBody Dobavljac dobavljac) {
         return dobavljacService.insertDobavljac(dobavljac);
     }
 
@@ -119,7 +121,7 @@ public class PrenocisteRESTController {
     }
 
     @PatchMapping("/dobavljaci/{id}")
-    public Dobavljac patchDobavljac(@PathVariable(name = "id") int id, @RequestBody Dobavljac dobavljac) {
+    public Dobavljac patchDobavljac(@PathVariable(name = "id") int id,@Valid @RequestBody Dobavljac dobavljac) {
         return dobavljacService.patchDobavljac(id, dobavljac);
     }
 

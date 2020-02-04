@@ -74,7 +74,7 @@ export class tableDobavljaci extends Component {
     else this.setState({ selectedDobavljac: dobavljac });
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.props.setSelectedRow(null);
   }
 
@@ -198,7 +198,11 @@ export class tableDobavljaci extends Component {
           </div>
           <div className="justify-content-center">
             <Form.Row>
-              <Table className="table-hover table-bordered" responsive>
+              <Table
+                className="table-hover table-bordered"
+                id="tableDobavljaci"
+                responsive
+              >
                 <thead>
                   <tr>
                     <th>#</th>
@@ -238,16 +242,20 @@ export class tableDobavljaci extends Component {
             </Form.Row>
             <Form.Row>
               <Col>
-                {this.state.selectedDobavljac && (
-                  <TablePorudzbenice
-                    porudzbenice={this.state.porudzbenice}
-                    setSelectedRow={this.setSelectedRowPorudzbenice}
-                    selectedRow={this.state.selectedRowOfPorudzbenice}
-                    setPorudzbenica={this.setSelectedPorudzbenica}
-                    porudzbenica={this.state.selectedPorudzbenica}
-                    switchToObrada={this.switchToObrada}
-                  ></TablePorudzbenice>
-                )}
+                <div className="porudzbenice-container">
+                  {this.state.selectedDobavljac && (
+                    <TablePorudzbenice
+                      id="tablePorudzbenice"
+                      responsive
+                      porudzbenice={this.state.porudzbenice}
+                      setSelectedRow={this.setSelectedRowPorudzbenice}
+                      selectedRow={this.state.selectedRowOfPorudzbenice}
+                      setPorudzbenica={this.setSelectedPorudzbenica}
+                      porudzbenica={this.state.selectedPorudzbenica}
+                      switchToObrada={this.switchToObrada}
+                    ></TablePorudzbenice>
+                  )}
+                </div>
               </Col>
             </Form.Row>
             <Form.Row>
@@ -255,6 +263,7 @@ export class tableDobavljaci extends Component {
                 {this.state.selectedRowOfPorudzbenice &&
                   this.state.selectedDobavljac && (
                     <TablePorudzbenica
+                      id="tablePorudzbenica"
                       proizvodi={
                         this.state.selectedPorudzbenica
                           ? this.state.selectedPorudzbenica.stavke

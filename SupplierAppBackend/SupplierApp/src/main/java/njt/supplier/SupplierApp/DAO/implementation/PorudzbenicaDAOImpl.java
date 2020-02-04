@@ -8,7 +8,9 @@ package njt.supplier.SupplierApp.DAO.implementation;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
+
 import njt.supplier.SupplierApp.DAO.PorudzbenicaDAO;
 import njt.supplier.SupplierApp.entity.Porudzbenica;
 import njt.supplier.SupplierApp.entity.StavkaPorudzbenice;
@@ -17,7 +19,6 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 /**
- *
  * @author Ivan
  */
 @Repository
@@ -39,7 +40,12 @@ public class PorudzbenicaDAOImpl implements PorudzbenicaDAO {
             Porudzbenica porudzbenica = query.getSingleResult();
             return porudzbenica;
 
+        } catch (NoResultException e) {
+
+            System.out.println("No result for Porudzbenica with id " + id);
+            return null;
         } catch (Exception e) {
+
             e.printStackTrace();
             return null;
         }
@@ -69,8 +75,9 @@ public class PorudzbenicaDAOImpl implements PorudzbenicaDAO {
             Session session = entityManager.unwrap(Session.class);
             for (StavkaPorudzbenice sp : porudzbenica.getStavke()) {
                 sp.setPorudzbenica(porudzbenica);
-
+                System.out.println(sp);
             }
+            System.out.println("Porudzbenica pre unosa");
             System.out.println(porudzbenica);
             session.merge(porudzbenica);
             return porudzbenica;
@@ -105,22 +112,26 @@ public class PorudzbenicaDAOImpl implements PorudzbenicaDAO {
 
             Porudzbenica dbPorudzbenica = session.get(Porudzbenica.class, id);
 
-            dbPorudzbenica.setDatum(novaPorudzbenica.getDatum());
+            if (dbPorudzbenica != null) {
+                if (novaPorudzbenica != null) {
+                    dbPorudzbenica.setDatum(novaPorudzbenica.getDatum());
 
-            List<StavkaPorudzbenice> stavkeIzNove = novaPorudzbenica.getStavke();
-            List<StavkaPorudzbenice> stavkeZaStaru = new ArrayList<StavkaPorudzbenice>();
-            for (StavkaPorudzbenice stavkaPorudzbenice : stavkeIzNove) {
-                if (!stavkaPorudzbenice.isZaBrisanje()) {
-                    stavkaPorudzbenice.setPorudzbenica(dbPorudzbenica);
-                    stavkeZaStaru.add(stavkaPorudzbenice);
+
+                    List<StavkaPorudzbenice> stavkeIzNove = novaPorudzbenica.getStavke();
+                    List<StavkaPorudzbenice> stavkeZaStaru = new ArrayList<StavkaPorudzbenice>();
+                    for (StavkaPorudzbenice stavkaPorudzbenice : stavkeIzNove) {
+                        if (!stavkaPorudzbenice.isZaBrisanje()) {
+                            stavkaPorudzbenice.setPorudzbenica(dbPorudzbenica);
+                            stavkeZaStaru.add(stavkaPorudzbenice);
+                        }
+                    }
+
+                    dbPorudzbenica.getStavke().clear();
+                    dbPorudzbenica.getStavke().addAll(stavkeZaStaru);
+
+                    session.merge(dbPorudzbenica);
                 }
             }
-
-            dbPorudzbenica.getStavke().clear();
-            dbPorudzbenica.getStavke().addAll(stavkeZaStaru);
-
-            session.merge(dbPorudzbenica);
-
             return dbPorudzbenica;
         } catch (Exception e) {
             e.printStackTrace();

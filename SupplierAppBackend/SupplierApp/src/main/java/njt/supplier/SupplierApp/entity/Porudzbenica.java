@@ -18,6 +18,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -34,12 +38,15 @@ public class Porudzbenica {
     private int id;
     @Column(name = "datum")
     private Date datum;
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "dobavljacId")
     private Dobavljac dobavljac;
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "prenocisteId")
     private Prenociste prenociste;
+
     @OneToMany(mappedBy = "porudzbenica", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<StavkaPorudzbenice> stavke;
 
@@ -48,8 +55,8 @@ public class Porudzbenica {
 
 
 
-    public Porudzbenica(Date datum, Dobavljac dobavljac, Prenociste prenociste, List<StavkaPorudzbenice> stavke) {
-
+    public Porudzbenica(int id,Date datum, Dobavljac dobavljac, Prenociste prenociste, List<StavkaPorudzbenice> stavke) {
+        this.id=id;
         this.datum = datum;
         this.dobavljac = dobavljac;
         this.prenociste = prenociste;

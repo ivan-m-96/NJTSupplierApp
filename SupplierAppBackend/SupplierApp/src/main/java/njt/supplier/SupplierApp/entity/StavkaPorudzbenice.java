@@ -18,6 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 /**
  *
@@ -32,11 +35,14 @@ public class StavkaPorudzbenice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+    @Positive
     @Column(name= "kolicina")
     private int kolicina;
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "porudzbenicaId")
     private Porudzbenica porudzbenica;
+    @NotNull
     @ManyToOne
     @JoinColumn (name = "stavkaKatalogaId")
     private StavkaKataloga stavkaKataloga;
