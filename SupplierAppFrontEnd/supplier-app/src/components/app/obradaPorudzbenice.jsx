@@ -324,7 +324,10 @@ export default class obradaPorudzbenice extends Component {
     }
     if (porudzbenica) {
       this.setState({ stavke: porudzbenica.data.stavke });
-      this.setState({ selectedDobavljac: porudzbenica.data.dobavljac });
+      this.setState({
+        selectedDobavljac: porudzbenica.data.dobavljac,
+        selectedDobavljacPrikaz: porudzbenica.data.dobavljac
+      });
       this.setState({ datum: new Date(porudzbenica.data.datum) });
       this.getKatalozi();
       await this.props.setSelectedPorudzbenica(this.state.selectedPorudzbenica);

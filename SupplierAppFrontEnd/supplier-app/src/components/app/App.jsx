@@ -19,7 +19,6 @@ import {
   updateHeader
 } from "./service/api";
 import Header from "./header";
-import Forma from "./form";
 import Tabela from "./tableDobavljaci";
 import Login from "./Login";
 import ObradaPorudzbenice from "./obradaPorudzbenice";
@@ -51,7 +50,6 @@ class App extends React.Component {
   }
   async onRemove() {
     try {
-      console.log("proba");
       const id = this.state.selectedRow;
 
       let result = await removeDobavljac(id);
@@ -183,7 +181,6 @@ class App extends React.Component {
           <div>
             <hr />
             <div>
-              {/* <Route path="/form" render={props => <Forma {...props} />} /> */}
               <Route
                 path="/login"
                 render={props => (
